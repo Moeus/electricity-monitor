@@ -44,10 +44,10 @@ RECEIVER_EMAIL = str(config['email']['receiver_email'])
 ALERT_THRESHOLD = float(config['monitor']['alert_threshold'])
 
 # 动态预测配置
-MAX_INTERVAL_HOURS = float(config['monitor']['max_interval_hours'])  # ★ 最长间隔：12小时（即频率绝不低于12小时1次）
-MIN_INTERVAL_HOURS = float(config['monitor']['min_interval_hours'])   # ★ 最短间隔：0.5小时（余额见底时，为防止被封，最快0.5小时查1次）
-SAFE_MARGIN = float(config['monitor']['safe_margin'])          # 安全系数：预测能用10小时，则提前在第8小时（80%）去复查
-EMAIL_COOLDOWN = int(config['monitor']['email_cooldown']) # 邮件冷却时间
+MAX_INTERVAL_HOURS = float(config['monitor']['max_interval_hours'])  
+MIN_INTERVAL_HOURS = float(config['monitor']['min_interval_hours'])  
+SAFE_MARGIN = float(config['monitor']['safe_margin'])          
+EMAIL_COOLDOWN = int(config['monitor']['email_cooldown']) 
 
 # ==========================================
 
@@ -277,7 +277,7 @@ class SmartElecMonitor:
         final_interval = max(MIN_INTERVAL_HOURS, min(MAX_INTERVAL_HOURS, suggested_interval))
         
         if final_interval == MAX_INTERVAL_HOURS:
-            logging.info(f"✅ 触发约束: 建议休眠过长，强制执行【频率不低于12小时一次】的保底规则。")
+            logging.info(f"✅ 触发约束: 建议休眠过长，强制执行【频率不低于{MAX_INTERVAL_HOURS}小时一次】的保底规则。")
             
         return final_interval
 
@@ -331,7 +331,7 @@ def start_daemon():
         
         # 动态计算下一次的执行时间点
         next_run_time = datetime.now() + timedelta(hours=delay_hours)
-        logging.info(f"⏳ 下次自动查询计划于: {next_run_time.strftime('%Y-%m-%d %H:%M:%S')} (距今 {delay_hours:.1f} 小时)")
+        logging.info(f"⏳ 下次自动查询计划于: {next_run_time.strftime('%Y-%m-%d %H:%M:%S')} (距今 {delay_hours:.2f} 小时)")
         
         # 将新计划推入调度器中（替换掉之前的规则）
         scheduler.add_job(
