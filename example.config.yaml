@@ -1,0 +1,32 @@
+account:
+  # 智慧工大账号（学号）
+  username: ""
+  # 智慧工大密码
+  password: ""
+
+# 邮箱推送消息配置
+email:
+  # SMTP服务器（可选其他服务商，推荐QQ邮箱）
+  smtp_server: "smtp.qq.com"
+  smtp_port: 465
+  # 发件人邮箱（使用自己的QQ邮箱）
+  sender_email: ""
+  # 发件人邮箱smtp密钥（smtp密钥需要申请，请自行上网查询教程）
+  sender_password: ""
+  # 收件人邮箱（使用自己的QQ邮箱，可以与发件人邮箱相同，只能配置一个）
+  receiver_email: ""
+
+monitor:
+  #电费阈值（单位：元，低于这个阈值时将触发邮件提醒）
+  alert_threshold: 5
+  # 查询频率限制项
+  #最大查询间隔时间，系统的最低查询频率，也就是至少多久查询一次，单位：小时
+  max_interval_hours: 12.0 
+  #最小间隔时间，系统的最高查询频率，单位：小时
+  min_interval_hours: 0.5 
+  
+  #安全边际 （取值：0-1，推荐0.8），具体原理请参照代码
+  safe_margin: 0.8 
+  # 邮箱冷却时间（单位：秒）
+  email_cooldown: 7200
+
